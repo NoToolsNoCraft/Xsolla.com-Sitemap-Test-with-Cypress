@@ -22,10 +22,11 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm ci  # Install dependencies from package-lock.json
 
       - name: Install Cypress
-        run: npx cypress install
+        run: npm install cypress --save-dev  # Install Cypress as a dev dependency
 
       - name: Run Cypress tests on Ubuntu
         run: npx cypress run --spec ${spec} # Run specific test file
@@ -45,10 +46,11 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm ci  # Install dependencies from package-lock.json
 
       - name: Install Cypress
-        run: npx cypress install
+        run: npm install cypress --save-dev  # Install Cypress as a dev dependency
 
       - name: Run Cypress tests on Windows
         run: npx cypress run --spec ${spec} # Run specific test file
