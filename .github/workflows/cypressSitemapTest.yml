@@ -1,56 +1,32 @@
-name: Cypress Sitemap Tests for Xsolla
+name: Run Cypress Sitemap Tests for Xsolla.com
 
 on:
   push:
     branches:
-      - main
+      - main  # or the branch you want to trigger the tests on
   pull_request:
+    branches:
+      - main  # or the branch you want to trigger the tests on
 
 jobs:
-  ubuntu-tests:
+  cypress-run:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        spec: ['cypress/e2e/xsollaBlogSitemapTest.cy.js', 'cypress/e2e/xsollaFAQSitemapTest.cy.js', 'cypress/e2e/xsollaIndexSitemapTest.cy.js'] # First half of tests
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify the Node.js version
 
-      - name: Install dependencies
-        run: |
-          npm ci  # Install dependencies from package-lock.json
+    - name: Install dependencies
+      run: |
+        npm ci  # Install dependencies from package-lock.json
 
-      - name: Install Cypress
-        run: npm install cypress --save-dev  # Install Cypress as a dev dependency
+    - name: Install Cypress
+      run: npm install cypress --save-dev  # Install Cypress as a dev dependency
 
-      - name: Run Cypress tests on Ubuntu
-        run: npx cypress run --browser chrome --spec ${{ matrix.spec }} # Run specific test file
-
-  windows-tests:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        spec: ['cypress/e2e/xsollaNewsroomSitemapTest.cy.js', 'cypress/e2e/xsollaOthersSitemaptest.cy.js', 'cypress/e2e/xsollaPages2SitemapTest.cy.js'] # Second half of tests
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Install dependencies
-        run: |
-          npm ci  # Install dependencies from package-lock.json
-
-      - name: Install Cypress
-        run: npm install cypress --save-dev  # Install Cypress as a dev dependency
-
-      - name: Run Cypress tests on Windows
-        run: npx cypress run --browser chrome --spec ${{ matrix.spec }} # Run specific test file
+    - name: Run Cypress tests
+      run: npx cypress run --spec 'cypress/e2e/'  # Runs all tests in the e2e folder
