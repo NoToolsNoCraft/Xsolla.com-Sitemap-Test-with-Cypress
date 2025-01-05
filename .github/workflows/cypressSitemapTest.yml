@@ -29,7 +29,7 @@ jobs:
         run: npm install cypress --save-dev  # Install Cypress as a dev dependency
 
       - name: Run Cypress tests on Ubuntu
-        run: npx cypress run --spec ${{ matrix.spec }} # Run specific test file
+        run: npx cypress run --browser chrome --spec ${{ matrix.spec }} # Run specific test file
 
   windows-tests:
     runs-on: windows-latest
@@ -53,4 +53,4 @@ jobs:
         run: npm install cypress --save-dev  # Install Cypress as a dev dependency
 
       - name: Run Cypress tests on Windows
-        run: npx cypress run --spec ${{ matrix.spec }} # Run specific test file
+        run: npx cypress run --browser chrome --spec ${{ matrix.spec }} # Run specific test file
